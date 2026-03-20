@@ -1,0 +1,479 @@
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 0 4rem;
+  background: #f4f9f4;
+  min-height: 100vh;
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  color: #777;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #4caf50;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: white;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navLogo {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2e7d32;
+}
+
+.logoutBtn {
+  background: #fdecea;
+  color: #e53935;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logoutBtn:hover { background: #ffcdd2; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  padding: 1.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+
+.greeting {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 0.2rem;
+}
+
+.userName {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.levelBadge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.greenScoreCircle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 3px solid rgba(255,255,255,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.greenScoreNum {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.greenScoreText {
+  font-size: 0.6rem;
+  opacity: 0.85;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  padding: 1rem 1rem 0;
+}
+
+.statCard {
+  background: white;
+  border-radius: 12px;
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.statIcon { font-size: 1.2rem; }
+
+.statNum {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #2e7d32;
+}
+
+.statLabel {
+  font-size: 0.68rem;
+  color: #999;
+  font-weight: 500;
+}
+
+/* Section */
+.section {
+  padding: 1.2rem 1rem 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.viewAllBtn {
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Quick Actions */
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.actionCard {
+  background: white;
+  border: none;
+  border-radius: 14px;
+  padding: 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-align: left;
+}
+
+.actionCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.actionIcon { font-size: 1.8rem; margin-bottom: 0.3rem; }
+
+.actionLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.actionSub { font-size: 0.78rem; color: #999; }
+
+/* Weekly Activity */
+.activityCard {
+  background: white;
+  border-radius: 14px;
+  padding: 1.2rem 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100px;
+  gap: 0.4rem;
+}
+
+.barCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  gap: 0.3rem;
+}
+
+.barCount {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #4caf50;
+  height: 14px;
+}
+
+.barWrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.6s ease;
+}
+
+.barDay {
+  font-size: 0.68rem;
+  color: #aaa;
+  font-weight: 500;
+}
+
+/* Score Distribution */
+.distributionCard {
+  background: white;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.distRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.distGrade {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 900;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.distBarTrack {
+  flex: 1;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.distBarFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+  min-width: 4px;
+}
+
+.distCount {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #555;
+  width: 20px;
+  text-align: right;
+}
+
+/* Recent Scans */
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.recentCard {
+  background: white;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.15s;
+}
+
+.recentCard:hover { transform: translateX(3px); }
+
+.recentImageWrapper { flex-shrink: 0; }
+
+.recentImage {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.recentImagePlaceholder {
+  width: 48px;
+  height: 48px;
+  background: #f0f4f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.recentInfo { flex: 1; min-width: 0; }
+
+.recentName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recentBrand { font-size: 0.78rem; color: #aaa; }
+
+.recentScore {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 900;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Empty Scans */
+.emptyScans {
+  background: white;
+  border-radius: 14px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  color: #aaa;
+}
+
+.emptyScans p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+.scanNowBtn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.scanNowBtn:hover { background: #43a047; }
+
+/* Eco Tip */
+.ecoTip {
+  margin: 1.2rem 1rem 0;
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  font-size: 1.5rem;
+}
+
+.ecoTip div strong {
+  font-size: 0.9rem;
+  color: #2e7d32;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.ecoTip div p {
+  font-size: 0.83rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Skeleton Loading */
+.skeleton { padding: 1rem; }
+
+.skeletonHero {
+  height: 140px;
+  background: linear-gradient(90deg, #e8f5e9 25%, #f1f8f1 50%, #e8f5e9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.skeletonCard {
+  height: 80px;
+  background: linear-gradient(90deg, #e8f5e9 25%, #f1f8f1 50%, #e8f5e9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+.skeletonBlock {
+  height: 120px;
+  background: linear-gradient(90deg, #e8f5e9 25%, #f1f8f1 50%, #e8f5e9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

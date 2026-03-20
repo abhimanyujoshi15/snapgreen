@@ -1,0 +1,604 @@
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2e7d32;
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  color: #777;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: #f0f4f0;
+  padding: 0.3rem;
+  border-radius: 10px;
+}
+
+.tab {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #777;
+  background: transparent;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.tab:hover { color: #4caf50; }
+
+.activeTab {
+  background: white;
+  color: #2e7d32;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Scanner */
+.scanButton {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: #4caf50;
+  color: white;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s;
+  margin-bottom: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.scanButton:hover { background: #43a047; }
+.scanButton.scanning { background: #e53935; }
+.scanButton.scanning:hover { background: #c62828; }
+
+.cameraWrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: #000;
+}
+
+.camera { width: 100%; display: block; }
+
+.scanOverlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanLine {
+  width: 80%;
+  height: 2px;
+  background: #4caf50;
+  box-shadow: 0 0 8px #4caf50;
+  animation: scanPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes scanPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.cameraHint {
+  text-align: center;
+  color: white;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  background: rgba(0,0,0,0.5);
+}
+
+.manualForm {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.input:focus { border-color: #4caf50; outline: none; }
+
+.searchButton {
+  padding: 0.75rem 1.5rem;
+  background: #4caf50;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.searchButton:hover { background: #43a047; }
+
+/* Photo Tab */
+.photoTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.photoUploadLabel { width: 100%; cursor: pointer; }
+.photoInput { display: none; }
+
+.photoUploadBox {
+  width: 100%;
+  min-height: 200px;
+  border: 2px dashed #a5d6a7;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #777;
+  background: #f9fdf9;
+  transition: border-color 0.2s;
+  padding: 1rem;
+}
+
+.photoUploadBox:hover { border-color: #4caf50; }
+.photoIcon { font-size: 2.5rem; }
+.photoHint { font-size: 0.8rem; color: #aaa; }
+
+.photoPreview {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.retakeButton {
+  padding: 0.6rem 1.5rem;
+  background: #f0f4f0;
+  color: #2e7d32;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.retakeButton:hover { background: #dcedc8; }
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #777;
+  margin: 1.5rem 0;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #4caf50;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error {
+  background: #fdecea;
+  color: #c0392b;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Product Card */
+.productCard {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.productHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.productImage {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #f9f9f9;
+  padding: 0.3rem;
+  flex-shrink: 0;
+}
+
+.productInfo { flex: 1; }
+
+.productName {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.2rem;
+}
+
+.productBrand { color: #777; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.productCategory { font-size: 0.82rem; color: #aaa; }
+
+/* Eco Score Hero */
+.ecoScoreHero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  color: white;
+}
+
+.ecoScoreLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ecoScoreLetter {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.ecoScoreLabel {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: block;
+}
+
+.ecoScoreSub {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.ecoScoreRight {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+
+.overallScore {
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.overallScoreLabel {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Sections */
+.section {
+  padding: 1.2rem 1.5rem;
+  border-top: 1px solid #f5f5f5;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 0.75rem;
+}
+
+.impactText {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Fun Fact */
+.funFact {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: #fffde7;
+  border-left: 4px solid #fbc02d;
+  padding: 0.85rem 1rem;
+  margin: 0 1.5rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.funFact span { font-size: 1.2rem; flex-shrink: 0; }
+
+/* Score Bars */
+.scoreBars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.scoreBarGroup { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.scoreBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.scoreBarLabel {
+  width: 100px;
+  font-size: 0.88rem;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  flex: 1;
+  height: 10px;
+  background: #f0f0f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+}
+
+.scoreBarValue {
+  width: 55px;
+  text-align: right;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.scoreDetail {
+  font-size: 0.82rem;
+  color: #888;
+  padding-left: 100px;
+  line-height: 1.4;
+}
+
+/* Carbon Box */
+.carbonBox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff8e1;
+  margin: 0 1.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #ffb300;
+}
+
+.carbonIcon { font-size: 1.8rem; }
+
+.carbonBox strong {
+  font-size: 0.9rem;
+  color: #444;
+  display: block;
+}
+
+.carbonBox p { font-size: 0.85rem; color: #777; margin-top: 0.2rem; }
+
+/* Tips */
+.tips { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.tipNumber {
+  width: 24px;
+  height: 24px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Alternatives */
+.altSubtitle {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1rem;
+  margin-top: -0.4rem;
+}
+
+.altCard {
+  background: #f9fdf9;
+  border: 1.5px solid #c8e6c9;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.altHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.altScoreBadge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 900;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.altTitleGroup { flex: 1; }
+
+.altName {
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  display: block;
+}
+
+.altBrand { font-size: 0.82rem; color: #888; }
+
+.altScoreNum {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.altScoreNum span { font-size: 1.3rem; }
+.altScoreNum small { font-size: 0.75rem; color: #888; }
+
+.keyBenefit {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 99px;
+  margin-bottom: 0.6rem;
+}
+
+.altReason {
+  font-size: 0.87rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.co2Saved {
+  font-size: 0.85rem;
+  color: #388e3c;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Alt Meta */
+.altMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+}
+
+.altMetaLabel {
+  font-size: 0.78rem;
+  color: #999;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.altMetaValue {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.whereTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.whereTag {
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 99px;
+}
+
+/* Search Button */
+.searchBtn {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  background: #2e7d32;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.shareSection {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.shareCardBtn {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.shareCardBtn:hover { opacity: 0.9; }
+
+.searchBtn:hover { background: #1b5e20; }

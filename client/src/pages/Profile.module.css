@@ -1,0 +1,178 @@
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  background: #f4f9f4;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  padding: 2.5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: 3px solid rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.85rem;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.email {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 0.85rem 1.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.statNum {
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.3);
+}
+
+/* Menu */
+.menu {
+  margin: 1.2rem 1rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+.menuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f5f5f5;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.menuItem:last-child { border-bottom: none; }
+.menuItem:hover { background: #f9fdf9; }
+
+.menuIcon { font-size: 1.3rem; flex-shrink: 0; }
+
+.menuText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.menuLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.menuSub { font-size: 0.78rem; color: #aaa; }
+
+.menuArrow {
+  font-size: 1.4rem;
+  color: #ccc;
+  font-weight: 300;
+}
+
+/* App Info */
+.appInfo {
+  margin: 0 1rem 1rem;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.appLogo { font-size: 2rem; margin-bottom: 0.3rem; }
+
+.appName {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #2e7d32;
+  margin-bottom: 0.2rem;
+}
+
+.appVersion {
+  font-size: 0.75rem;
+  color: #bbb;
+  margin-bottom: 0.5rem;
+}
+
+.appTagline {
+  font-size: 0.82rem;
+  color: #888;
+  font-style: italic;
+}
+
+/* Logout */
+.logoutSection {
+  padding: 0 1rem;
+}
+
+.logoutBtn {
+  width: 100%;
+  padding: 0.9rem;
+  background: #fdecea;
+  color: #e53935;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logoutBtn:hover { background: #ffcdd2; }
