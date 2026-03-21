@@ -1,6 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import styles from './Profile.module.css'
+import {
+  Camera,
+  ClipboardList,
+  Medal,
+  Trophy,
+  LogOut,
+  ChevronRight,
+  Leaf
+} from 'lucide-react'
 
 const Profile = () => {
   const { user, logout } = useAuth()
@@ -12,31 +21,35 @@ const Profile = () => {
   }
 
   const menuItems = [
-    {
-      icon: '📷',
-      label: 'Scan a Product',
-      sub: 'Check eco impact',
-      action: () => navigate('/scanner')
-    },
-    {
-      icon: '📋',
-      label: 'Scan History',
-      sub: 'View all past scans',
-      action: () => navigate('/history')
-    },
-    {
-      icon: '🏅',
-      label: 'My Badges',
-      sub: `${user?.badges?.length || 0} earned`,
-      action: () => navigate('/badges')
-    },
-    {
-      icon: '🏆',
-      label: 'Leaderboard',
-      sub: 'See global rankings',
-      action: () => navigate('/leaderboard')
-    },
-  ]
+  {
+    icon: <Camera size={20} color='#2e7d32' />,
+    label: 'Scan a Product',
+    sub: 'Check eco impact',
+    action: () => navigate('/scanner'),
+    bg: '#e8f5e9'
+  },
+  {
+    icon: <ClipboardList size={20} color='#6a1b9a' />,
+    label: 'Scan History',
+    sub: 'View all past scans',
+    action: () => navigate('/history'),
+    bg: '#f3e5f5'
+  },
+  {
+    icon: <Medal size={20} color='#f57f17' />,
+    label: 'My Badges',
+    sub: `${user?.badges?.length || 0} earned`,
+    action: () => navigate('/badges'),
+    bg: '#fff8e1'
+  },
+  {
+    icon: <Trophy size={20} color='#1565c0' />,
+    label: 'Leaderboard',
+    sub: 'See global rankings',
+    action: () => navigate('/leaderboard'),
+    bg: '#e3f2fd'
+  },
+]
 
   return (
     <div className={styles.container}>
@@ -71,17 +84,15 @@ const Profile = () => {
       {/* Menu Items */}
       <div className={styles.menu}>
         {menuItems.map((item, i) => (
-          <button
-            key={i}
-            className={styles.menuItem}
-            onClick={item.action}
-          >
-            <span className={styles.menuIcon}>{item.icon}</span>
+          <button key={i} className={styles.menuItem} onClick={item.action}>
+            <div className={styles.menuIconBox} style={{ background: item.bg }}>
+              {item.icon}
+            </div>
             <div className={styles.menuText}>
               <span className={styles.menuLabel}>{item.label}</span>
               <span className={styles.menuSub}>{item.sub}</span>
             </div>
-            <span className={styles.menuArrow}>›</span>
+            <ChevronRight size={18} color='#ccc' />
           </button>
         ))}
       </div>
@@ -99,7 +110,7 @@ const Profile = () => {
       {/* Logout */}
       <div className={styles.logoutSection}>
         <button className={styles.logoutBtn} onClick={handleLogout}>
-          🚪 Logout
+          <LogOut size={18} /> Logout
         </button>
       </div>
 

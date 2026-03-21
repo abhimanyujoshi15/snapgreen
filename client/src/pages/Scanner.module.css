@@ -1,7 +1,6 @@
 .container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 2rem 1rem 4rem;
+  max-width: 900px;
+  padding: 0 0 3rem;
 }
 
 .title {
@@ -32,13 +31,17 @@
   flex: 1;
   padding: 0.6rem;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #777;
   background: transparent;
   transition: all 0.2s;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
 }
 
 .tab:hover { color: #4caf50; }
@@ -51,18 +54,11 @@
 
 /* Scanner */
 .scanButton {
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  background: #4caf50;
-  color: white;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background 0.2s;
-  margin-bottom: 1rem;
-  border: none;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* rest stays same */
 }
 
 .scanButton:hover { background: #43a047; }
@@ -127,15 +123,10 @@
 .input:focus { border-color: #4caf50; outline: none; }
 
 .searchButton {
-  padding: 0.75rem 1.5rem;
-  background: #4caf50;
-  color: white;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-  border: none;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  /* rest stays same */
 }
 
 .searchButton:hover { background: #43a047; }
@@ -180,15 +171,10 @@
 }
 
 .retakeButton {
-  padding: 0.6rem 1.5rem;
-  background: #f0f4f0;
-  color: #2e7d32;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-  border: none;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  /* rest stays same */
 }
 
 .retakeButton:hover { background: #dcedc8; }
@@ -587,16 +573,11 @@
 }
 
 .shareCardBtn {
-  width: 100%;
-  padding: 0.9rem;
-  background: linear-gradient(135deg, #2e7d32, #4caf50);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* rest stays same */
 }
 
 .shareCardBtn:hover { opacity: 0.9; }

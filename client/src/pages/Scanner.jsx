@@ -4,6 +4,14 @@ import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
 import styles from './Scanner.module.css'
 import ShareCard from '../components/ShareCard'
+import {
+  ScanBarcode,
+  Camera,
+  Search,
+  RefreshCw,
+  Share2,
+  Package
+} from 'lucide-react'
 
 const Scanner = () => {
   const { token } = useAuth()
@@ -105,30 +113,35 @@ const Scanner = () => {
       <p className={styles.subtitle}>Check the eco impact of any product</p>
 
       {/* Tabs */}
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${activeTab === 'barcode' ? styles.activeTab : ''}`}
-          onClick={() => { setActiveTab('barcode'); setScanning(false); setProduct(null); setError('') }}
-        >
-          📦 Barcode
-        </button>
-        <button
-          className={`${styles.tab} ${activeTab === 'photo' ? styles.activeTab : ''}`}
-          onClick={() => { setActiveTab('photo'); setScanning(false); setProduct(null); setError('') }}
-        >
-          📸 Photo
-        </button>
-      </div>
+          <div className={styles.tabs}>
+            <button
+              className={`${styles.tab} ${activeTab === 'barcode' ? styles.activeTab : ''}`}
+              onClick={() => { setActiveTab('barcode'); setScanning(false); setProduct(null); setError('') }}
+            >
+              <ScanBarcode size={16} /> Barcode
+            </button>
+            <button
+              className={`${styles.tab} ${activeTab === 'photo' ? styles.activeTab : ''}`}
+              onClick={() => { setActiveTab('photo'); setScanning(false); setProduct(null); setError('') }}
+            >
+              <Camera size={16} /> Photo
+            </button>
+          </div>
 
       {/* Barcode Tab */}
       {activeTab === 'barcode' && (
         <div>
-          <button
-            className={`${styles.scanButton} ${scanning ? styles.scanning : ''}`}
-            onClick={() => { setScanning(!scanning); setError(''); setProduct(null) }}
-          >
-            {scanning ? '⏹ Stop Scanning' : '📷 Start Camera Scanner'}
-          </button>
+          {/* Scan Button */}
+              <button
+                className={`${styles.scanButton} ${scanning ? styles.scanning : ''}`}
+                onClick={() => { setScanning(!scanning); setError(''); setProduct(null) }}
+              >
+                {scanning
+                  ? <><RefreshCw size={18} /> Stop Scanning</>
+                  : <><Camera size={18} /> Start Camera Scanner</>
+                }
+              </button>
+
 
           {scanning && (
             <div className={styles.cameraWrapper}>
@@ -149,6 +162,7 @@ const Scanner = () => {
               className={styles.input}
             />
             <button type='submit' className={styles.searchButton}>
+              <Search size={18} />
               Search
             </button>
           </form>
@@ -180,12 +194,12 @@ const Scanner = () => {
           </label>
 
           {photoPreview && !loading && (
-            <button
-              className={styles.retakeButton}
-              onClick={() => { setPhotoPreview(null); setProduct(null); setError('') }}
-            >
-              🔄 Scan Another
-            </button>
+              <button
+                className={styles.retakeButton}
+                onClick={() => { setPhotoPreview(null); setProduct(null); setError('') }}
+              >
+                <RefreshCw size={16} /> Scan Another
+              </button>
           )}
         </div>
       )}
@@ -400,14 +414,14 @@ const Scanner = () => {
       )}
 
       {/* Share Button */}
-      <div className={styles.shareSection}>
-        <button
-          className={styles.shareCardBtn}
-          onClick={() => setShowShareCard(true)}
-        >
-          📤 Share My Eco Score Card
-        </button>
-      </div>
+        <div className={styles.shareSection}>
+          <button
+            className={styles.shareCardBtn}
+            onClick={() => setShowShareCard(true)}
+          >
+            <Share2 size={18} /> Share My Eco Score Card
+          </button>
+        </div>
 
       {/* Share Card Modal */}
       {showShareCard && (

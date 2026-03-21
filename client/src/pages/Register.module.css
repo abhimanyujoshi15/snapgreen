@@ -24,9 +24,9 @@
 
 .title {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 800;        /* ← change to 800 */
+  letter-spacing: -0.5px;  /* ← add this */
   color: #2e7d32;
-  margin-bottom: 0.3rem;
 }
 
 .subtitle {
@@ -58,9 +58,11 @@
 }
 
 .inputGroup label {
-  font-size: 0.9rem;
+  font-size: 0.82rem;      /* ← slightly smaller */
   font-weight: 600;
-  color: #444;
+  letter-spacing: 0.3px;   /* ← add this */
+  text-transform: uppercase; /* ← add this — modern form feel */
+  color: #666;
 }
 
 .inputGroup input {
@@ -77,14 +79,8 @@
 }
 
 .button {
-  background: #4caf50;
-  color: white;
-  padding: 0.85rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background 0.2s, transform 0.1s;
-  margin-top: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;   /* ← add this */
 }
 
 .button:hover {

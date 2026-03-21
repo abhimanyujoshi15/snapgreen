@@ -1,9 +1,6 @@
 .container {
-  max-width: 640px;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 5rem;
-  background: #f4f9f4;
+  max-width: 900px;
+  padding: 0 0 3rem;
 }
 
 /* Hero */
@@ -104,6 +101,24 @@
 .menuItem:hover { background: #f9fdf9; }
 
 .menuIcon { font-size: 1.3rem; flex-shrink: 0; }
+
+.menuIconBox {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* rest stays same */
+}
 
 .menuText {
   flex: 1;

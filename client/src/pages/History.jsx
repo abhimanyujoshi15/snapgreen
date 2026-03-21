@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
 import styles from './History.module.css'
+import {
+  History as HistoryIcon,
+  ScanBarcode,
+  Camera,
+  Leaf,
+  AlertTriangle,
+  Trash2
+} from 'lucide-react'
 
 const History = () => {
   const { token } = useAuth()
@@ -119,18 +127,18 @@ const History = () => {
       {/* Filter Tabs */}
       <div className={styles.filters}>
         {[
-          { key: 'all', label: '🌿 All' },
-          { key: 'good', label: '✅ Green' },
-          { key: 'bad', label: '⚠️ Poor' },
-          { key: 'barcode', label: '📦 Barcode' },
-          { key: 'photo', label: '📸 Photo' },
+          { key: 'all', label: 'All', icon: <HistoryIcon size={14} /> },
+          { key: 'good', label: 'Green', icon: <Leaf size={14} /> },
+          { key: 'bad', label: 'Poor', icon: <AlertTriangle size={14} /> },
+          { key: 'barcode', label: 'Barcode', icon: <ScanBarcode size={14} /> },
+          { key: 'photo', label: 'Photo', icon: <Camera size={14} /> },
         ].map(f => (
           <button
             key={f.key}
             className={`${styles.filterBtn} ${filter === f.key ? styles.activeFilter : ''}`}
             onClick={() => setFilter(f.key)}
           >
-            {f.label}
+            {f.icon} {f.label}
           </button>
         ))}
       </div>
@@ -201,7 +209,7 @@ const History = () => {
                   onClick={() => handleDelete(scan._id)}
                   disabled={deleting === scan._id}
                 >
-                  {deleting === scan._id ? '...' : '🗑️'}
+                  <Trash2 size={15} />
                 </button>
               </div>
 

@@ -1,8 +1,6 @@
 .container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 4rem;
-  padding-bottom: 5rem; /* space for bottom navbar */
+  max-width: 900px;
+  padding: 0 0 3rem;
 }
 
 .centered {

@@ -10,17 +10,21 @@ import History from './pages/History'
 import Badges from './pages/Badges'
 import Leaderboard from './pages/Leaderboard'
 import Profile from './pages/Profile'
+import styles from './App.module.css'
 
 const authRoutes = ['/login', '/register']
 
 const Layout = ({ children }) => {
   const location = useLocation()
   const showNav = !authRoutes.includes(location.pathname)
+
   return (
-    <>
-      {children}
+    <div className={styles.appLayout}>
       {showNav && <Navbar />}
-    </>
+      <main className={`${styles.mainContent} ${showNav ? styles.withSidebar : ''}`}>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -38,10 +42,7 @@ const App = () => {
             <Route path='/history' element={<ProtectedRoute><History /></ProtectedRoute>} />
             <Route path='/badges' element={<ProtectedRoute><Badges /></ProtectedRoute>} />
             <Route path='/leaderboard' element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
-            <Route
-                path='/profile'
-                element={<ProtectedRoute><Profile /></ProtectedRoute>}
-            />
+            <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           </Routes>
         </Layout>
       </BrowserRouter>

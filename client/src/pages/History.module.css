@@ -1,8 +1,6 @@
 .container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 4rem;
-  padding-bottom: 5rem; /* space for bottom navbar */
+  max-width: 900px;
+  padding: 0 0 3rem;
 }
 
 .centered {
@@ -94,16 +92,10 @@
 }
 
 .filterBtn {
-  padding: 0.4rem 0.85rem;
-  border-radius: 99px;
-  border: 1.5px solid #ddd;
-  background: white;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #777;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  /* rest stays same */
 }
 
 .filterBtn:hover {
