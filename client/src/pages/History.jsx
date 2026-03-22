@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import API from '../api'
 import { useAuth } from '../context/AuthContext'
 import styles from './History.module.css'
 import {
@@ -28,7 +28,7 @@ const History = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/scans/history', {
+      const res = await API.get('/api/scans/history', {
         headers: { Authorization: `Bearer ${token}` }
       })
       setScans(res.data.scans)
@@ -42,7 +42,7 @@ const History = () => {
   const handleDelete = async (scanId) => {
     setDeleting(scanId)
     try {
-      await axios.delete(`http://localhost:5000/api/scans/${scanId}`, {
+      await API.delete(`/api/scans/${scanId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setScans(scans.filter(s => s._id !== scanId))

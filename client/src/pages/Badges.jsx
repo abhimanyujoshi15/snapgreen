@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import API from '../api'
 import { useAuth } from '../context/AuthContext'
 import styles from './Badges.module.css'
 
@@ -13,7 +13,7 @@ const Badges = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/dashboard/badges', {
+        const res = await API.get('/api/dashboard/badges', {
           headers: { Authorization: `Bearer ${token}` }
         })
         setBadges(res.data.badges)

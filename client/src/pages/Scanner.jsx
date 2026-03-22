@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useZxing } from 'react-zxing'
-import axios from 'axios'
+import API from '../api'
 import { useAuth } from '../context/AuthContext'
 import styles from './Scanner.module.css'
 import ShareCard from '../components/ShareCard'
@@ -40,10 +40,9 @@ const Scanner = () => {
     setError('')
     setProduct(null)
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/product/barcode/${code}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      const res = await API.get(`/api/product/barcode/${code}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       setProduct(res.data.product)
     } catch (err) {
       setError(err.response?.data?.message || 'Product not found')
@@ -75,7 +74,7 @@ const Scanner = () => {
         reader.readAsDataURL(file)
       })
 
-      const res = await axios.post(
+      const res = await API.post(
         'http://localhost:5000/api/product/photo',
         { imageBase64: base64, mimeType: file.type },
         { headers: { Authorization: `Bearer ${token}` } }

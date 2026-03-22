@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import API from '../api'
 import { useAuth } from '../context/AuthContext'
 import styles from './Leaderboard.module.css'
 
@@ -13,7 +13,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/dashboard/leaderboard', {
+        const res = await API.get('/api/dashboard/leaderboard', {
           headers: { Authorization: `Bearer ${token}` }
         })
         setLeaderboard(res.data.leaderboard)

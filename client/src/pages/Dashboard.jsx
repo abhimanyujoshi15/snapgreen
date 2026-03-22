@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import API from '../api'
 import { useAuth } from '../context/AuthContext'
 import styles from './Dashboard.module.css'
 import {
@@ -19,9 +19,9 @@ const Dashboard = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/dashboard', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const res = await API.get('/api/dashboard', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
       setData(res.data)
     } catch (err) {
       console.error(err)
