@@ -62,10 +62,9 @@ const Dashboard = () => {
       <header className={styles.header}>
         <div className={styles.welcome}>
           <p className={styles.greetingText}>{getGreeting()},</p>
-          <h1 className={styles.userName}>{user.name} <Sparkles size={20} className={styles.sparkle} /></h1>
+          <h1 className={styles.userName}>{user.name}</h1>
         </div>
         <div className={styles.streakBadge}>
-          <Flame size={18} fill="#ef4444" color="#ef4444" />
           <span>{user.streakCount} Day Streak</span>
         </div>
       </header>
