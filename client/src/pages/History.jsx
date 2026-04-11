@@ -108,39 +108,43 @@ const History = () => {
 
       {/* Stats Row */}
       <div className={styles.statsRow}>
-        <div className={styles.statCard}>
-          <span className={styles.statNumber}>{totalScans}</span>
-          <span className={styles.statLabel}>Total Scans</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statNumber}>{uniqueProducts}</span>
-          <span className={styles.statLabel}>Unique Products</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statNumber} style={{ color: '#4caf50' }}>
-            {totalScans > 0 ? Math.round((goodScans / totalScans) * 100) : 0}%
-          </span>
-          <span className={styles.statLabel}>Green Choices</span>
-        </div>
+        {[
+          { icon: '🔍', num: totalScans, label: 'Total Scans', bg: '#e3f2fd', color: '#1565c0' },
+          { icon: '📦', num: uniqueProducts, label: 'Unique Products', bg: '#f3e5f5', color: '#6a1b9a' },
+          { icon: '🌿', num: `${totalScans > 0 ? Math.round((goodScans / totalScans) * 100) : 0}%`, label: 'Green Choices', bg: '#e8f5e9', color: '#2e7d32' },
+        ].map((s, i) => (
+          <div key={i} className={styles.statCard}>
+            <div className={styles.statIconBox} style={{ background: s.bg }}>
+              <span style={{ fontSize: '1.3rem' }}>{s.icon}</span>
+            </div>
+            <div>
+              <div className={styles.statNumber} style={{ color: s.color }}>{s.num}</div>
+              <div className={styles.statLabel}>{s.label}</div>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Filter Tabs */}
-      <div className={styles.filters}>
-        {[
-          { key: 'all', label: 'All', icon: <HistoryIcon size={14} /> },
-          { key: 'good', label: 'Green', icon: <Leaf size={14} /> },
-          { key: 'bad', label: 'Poor', icon: <AlertTriangle size={14} /> },
-          { key: 'barcode', label: 'Barcode', icon: <ScanBarcode size={14} /> },
-          { key: 'photo', label: 'Photo', icon: <Camera size={14} /> },
-        ].map(f => (
-          <button
-            key={f.key}
-            className={`${styles.filterBtn} ${filter === f.key ? styles.activeFilter : ''}`}
-            onClick={() => setFilter(f.key)}
-          >
-            {f.icon} {f.label}
-          </button>
-        ))}
+      {/* Filter Bar */}
+      <div className={styles.filterBar}>
+        <span className={styles.filterLabel}>Filter:</span>
+        <div className={styles.filters}>
+          {[
+            { key: 'all', label: 'All Scans', icon: <HistoryIcon size={13} /> },
+            { key: 'good', label: 'Green', icon: <Leaf size={13} /> },
+            { key: 'bad', label: 'Poor', icon: <AlertTriangle size={13} /> },
+            { key: 'barcode', label: 'Barcode', icon: <ScanBarcode size={13} /> },
+            { key: 'photo', label: 'Photo', icon: <Camera size={13} /> },
+          ].map(f => (
+            <button
+              key={f.key}
+              className={`${styles.filterBtn} ${filter === f.key ? styles.activeFilter : ''}`}
+              onClick={() => setFilter(f.key)}
+            >
+              {f.icon} {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {error && <div className={styles.error}>{error}</div>}
@@ -148,75 +152,82 @@ const History = () => {
       {/* Empty State */}
       {filteredScans.length === 0 && !loading && (
         <div className={styles.emptyState}>
-          <span>🔍</span>
-          <p>No scans found</p>
-          <button
-            className={styles.scanNowBtn}
-            onClick={() => navigate('/scanner')}
-          >
-            Scan your first product
-          </button>
+          <span className={styles.emptyIcon}>🔍</span>
+          <p className={styles.emptyTitle}>No scans found</p>
+          <p className={styles.emptyText}>
+            {filter === 'all' ? 'Start scanning products to build your history' : 'No scans match this filter'}
+          </p>
+          {filter === 'all' && (
+            <button className={styles.scanNowBtn} onClick={() => navigate('/scanner')}>
+              <Camera size={16} /> Scan a Product
+            </button>
+          )}
         </div>
       )}
 
-      {/* Scan List */}
-      <div className={styles.scanList}>
-        {filteredScans.map((scan) => {
-          const product = scan.productId
-          if (!product) return null
+      {/* ✅ Fixed Scan Cards */}
+      {filteredScans.map(scan => {
+        const product = scan.productId || {}
 
-          return (
-            <div key={scan._id} className={styles.scanCard}>
-
-              {/* Left — Product Image */}
-              <div className={styles.scanImageWrapper}>
-                {product.imageUrl ? (
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name}
-                    className={styles.scanImage}
-                  />
-                ) : (
-                  <div className={styles.scanImagePlaceholder}>
-                    {scan.scanMethod === 'photo' ? '📸' : '📦'}
-                  </div>
-                )}
-              </div>
-
-              {/* Middle — Product Info */}
-              <div className={styles.scanInfo}>
-                <h3 className={styles.scanProductName}>{product.name}</h3>
-                <p className={styles.scanBrand}>{product.brand}</p>
-                <p className={styles.scanMeta}>
-                  {scan.scanMethod === 'photo' ? '📸 Photo' : '📦 Barcode'} ·{' '}
-                  {formatDate(scan.createdAt)}
-                </p>
-              </div>
-
-              {/* Right — Eco Score + Delete */}
-              <div className={styles.scanRight}>
-                <div
-                  className={styles.miniScore}
-                  style={{ backgroundColor: getScoreColor(scan.ecoScoreAtScan) }}
-                >
-                  <span className={styles.miniScoreLetter}>{scan.ecoScoreAtScan}</span>
-                  <span className={styles.miniScoreLabel}>
-                    {getScoreLabel(scan.ecoScoreAtScan)}
-                  </span>
+        return (
+          <div key={scan._id} className={styles.scanCard}>
+            <div className={styles.scanImageWrapper}>
+              {product.imageUrl ? (
+                <img src={product.imageUrl} alt={product.name} className={styles.scanImage} />
+              ) : (
+                <div className={styles.scanImagePlaceholder}>
+                  {scan.scanMethod === 'photo' ? '📸' : '📦'}
                 </div>
-                <button
-                  className={styles.deleteBtn}
-                  onClick={() => handleDelete(scan._id)}
-                  disabled={deleting === scan._id}
-                >
-                  <Trash2 size={15} />
-                </button>
+              )}
+            </div>
+
+            <div className={styles.scanInfo}>
+              <p className={styles.scanProductName}>{product.name}</p>
+              <p className={styles.scanBrand}>{product.brand}</p>
+
+              <div className={styles.scanMetaRow}>
+                <span className={styles.scanMethodBadge}>
+                  {scan.scanMethod === 'photo' ? (
+                    <>
+                      <Camera size={10} /> Photo
+                    </>
+                  ) : (
+                    <>
+                      <ScanBarcode size={10} /> Barcode
+                    </>
+                  )}
+                </span>
+
+                <span className={styles.scanDate}>
+                  {formatDate(scan.createdAt)}
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.scanRight}>
+              <div
+                className={styles.miniScore}
+                style={{ backgroundColor: getScoreColor(scan.ecoScoreAtScan) }}
+              >
+                <span className={styles.miniScoreLetter}>
+                  {scan.ecoScoreAtScan}
+                </span>
+                <span className={styles.miniScoreLabel}>
+                  {getScoreLabel(scan.ecoScoreAtScan)}
+                </span>
               </div>
 
+              <button
+                className={styles.deleteBtn}
+                onClick={() => handleDelete(scan._id)}
+                disabled={deleting === scan._id}
+              >
+                <Trash2 size={14} />
+              </button>
             </div>
-          )
-        })}
-      </div>
+          </div>
+        )
+      })}
 
     </div>
   )

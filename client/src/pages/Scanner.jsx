@@ -106,112 +106,161 @@ const Scanner = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>🌿 Scan a Product</h1>
-      <p className={styles.subtitle}>Check the eco impact of any product</p>
+  <div className={styles.container}>
 
-      {/* Tabs */}
-          <div className={styles.tabs}>
+    {/* Page Header */}
+    <div className={styles.pageHeader}>
+      <h1 className={styles.pageTitle}>🌿 Scan a Product</h1>
+      <p className={styles.pageSubtitle}>
+        Check the environmental impact of any product instantly
+      </p>
+    </div>
+
+    {/* Tabs */}
+    <div className={styles.tabs}>
+      <button
+        className={`${styles.tab} ${activeTab === 'barcode' ? styles.activeTab : ''}`}
+        onClick={() => { setActiveTab('barcode'); setScanning(false); setProduct(null); setError('') }}
+      >
+        <ScanBarcode size={16} /> Barcode
+      </button>
+      <button
+        className={`${styles.tab} ${activeTab === 'photo' ? styles.activeTab : ''}`}
+        onClick={() => { setActiveTab('photo'); setScanning(false); setProduct(null); setError('') }}
+      >
+        <Camera size={16} /> Photo
+      </button>
+    </div>
+
+    {/* Layout — side by side when product exists */}
+    <div className={product ? styles.scanLayout : styles.scanLayoutFull}>
+
+      {/* Left — Scan Panel */}
+      <div className={styles.scanPanel}>
+
+        {/* Barcode Tab */}
+        {activeTab === 'barcode' && (
+          <>
             <button
-              className={`${styles.tab} ${activeTab === 'barcode' ? styles.activeTab : ''}`}
-              onClick={() => { setActiveTab('barcode'); setScanning(false); setProduct(null); setError('') }}
+              className={`${styles.scanButton} ${scanning ? styles.scanning : ''}`}
+              onClick={() => { setScanning(!scanning); setError(''); setProduct(null) }}
             >
-              <ScanBarcode size={16} /> Barcode
+              {scanning
+                ? <><RefreshCw size={18} /> Stop Scanning</>
+                : <><Camera size={18} /> Start Camera Scanner</>
+              }
             </button>
-            <button
-              className={`${styles.tab} ${activeTab === 'photo' ? styles.activeTab : ''}`}
-              onClick={() => { setActiveTab('photo'); setScanning(false); setProduct(null); setError('') }}
-            >
-              <Camera size={16} /> Photo
-            </button>
-          </div>
 
-      {/* Barcode Tab */}
-      {activeTab === 'barcode' && (
-        <div>
-          {/* Scan Button */}
-              <button
-                className={`${styles.scanButton} ${scanning ? styles.scanning : ''}`}
-                onClick={() => { setScanning(!scanning); setError(''); setProduct(null) }}
-              >
-                {scanning
-                  ? <><RefreshCw size={18} /> Stop Scanning</>
-                  : <><Camera size={18} /> Start Camera Scanner</>
-                }
-              </button>
-
-
-          {scanning && (
-            <div className={styles.cameraWrapper}>
-              <video ref={ref} className={styles.camera} />
-              <div className={styles.scanOverlay}>
-                <div className={styles.scanLine} />
+            {scanning && (
+              <div className={styles.cameraWrapper}>
+                <video ref={ref} className={styles.camera} />
+                <div className={styles.scanOverlay}>
+                  <div className={styles.scanFrame}>
+                    <div className={styles.scanLine} />
+                  </div>
+                  <span className={styles.cameraHint}>Point at a barcode</span>
+                </div>
               </div>
-              <p className={styles.cameraHint}>Point camera at a barcode</p>
-            </div>
-          )}
+            )}
 
-          <form onSubmit={handleManualSearch} className={styles.manualForm}>
-            <input
-              type='text'
-              placeholder='Or enter barcode manually...'
-              value={barcode}
-              onChange={(e) => setBarcode(e.target.value)}
-              className={styles.input}
-            />
-            <button type='submit' className={styles.searchButton}>
-              <Search size={18} />
-              Search
-            </button>
-          </form>
-        </div>
-      )}
+            <form onSubmit={handleManualSearch} className={styles.manualForm}>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputIcon}><Search size={16} /></span>
+                <input
+                  type='text'
+                  placeholder='Enter barcode manually...'
+                  value={barcode}
+                  onChange={(e) => setBarcode(e.target.value)}
+                  className={styles.input}
+                />
+              </div>
+              <button type='submit' className={styles.searchButton}>
+                <Search size={16} /> Search
+              </button>
+            </form>
+          </>
+        )}
 
-      {/* Photo Tab */}
-      {activeTab === 'photo' && (
-        <div className={styles.photoTab}>
-          <label className={styles.photoUploadLabel}>
-            <input
-              type='file'
-              accept='image/*'
-              capture='environment'
-              onChange={handlePhotoUpload}
-              className={styles.photoInput}
-            />
-            <div className={styles.photoUploadBox}>
-              {photoPreview ? (
-                <img src={photoPreview} alt='Preview' className={styles.photoPreview} />
-              ) : (
-                <>
-                  <span className={styles.photoIcon}>📷</span>
-                  <p>Click to take a photo or upload</p>
-                  <span className={styles.photoHint}>Gemini AI will identify the product</span>
-                </>
-              )}
-            </div>
-          </label>
-
-          {photoPreview && !loading && (
+        {/* Photo Tab */}
+        {activeTab === 'photo' && (
+          <div className={styles.photoTab}>
+            <label className={styles.photoUploadLabel}>
+              <input
+                type='file'
+                accept='image/*'
+                capture='environment'
+                onChange={handlePhotoUpload}
+                className={styles.photoInput}
+              />
+              <div className={styles.photoUploadBox}>
+                {photoPreview ? (
+                  <img src={photoPreview} alt='Preview' className={styles.photoPreview} />
+                ) : (
+                  <>
+                    <div className={styles.photoIconWrapper}>
+                      <Camera size={28} color='#4caf50' />
+                    </div>
+                    <p className={styles.photoUploadTitle}>Click to take a photo</p>
+                    <p className={styles.photoUploadSub}>
+                      Gemini AI will identify the product
+                    </p>
+                  </>
+                )}
+              </div>
+            </label>
+            {photoPreview && !loading && (
               <button
                 className={styles.retakeButton}
                 onClick={() => { setPhotoPreview(null); setProduct(null); setError('') }}
               >
-                <RefreshCw size={16} /> Scan Another
+                <RefreshCw size={15} /> Scan Another
               </button>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        )}
 
-      {/* Loading */}
-      {loading && (
-        <div className={styles.loading}>
-          <div className={styles.spinner} />
-          <p>{activeTab === 'photo' ? 'Gemini is identifying product...' : 'Fetching product data...'}</p>
-        </div>
-      )}
+        {/* Tips Box */}
+        {!product && !loading && (
+          <div className={styles.tipsBox}>
+            <p className={styles.tipsTitle}>💡 Scanning Tips</p>
+            <div className={styles.tipsList}>
+              {[
+                'Hold barcode steady under good lighting',
+                'For photos, show the full product label',
+                'Try popular products: Nutella, Lay\'s, Amul',
+              ].map((tip, i) => (
+                <div key={i} className={styles.tipsItem}>
+                  <div className={styles.tipsDot} />
+                  <span>{tip}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* Error */}
-      {error && <div className={styles.error}>{error}</div>}
+      </div>
+
+      {/* Right — Results */}
+      <div>
+        {/* Loading */}
+        {loading && (
+          <div className={styles.loadingBox}>
+            <div className={styles.spinnerRing} />
+            <p className={styles.loadingText}>
+              {activeTab === 'photo' ? 'Identifying product...' : 'Fetching data...'}
+            </p>
+            <p className={styles.loadingSub}>
+              {activeTab === 'photo' ? 'Gemini AI is analysing your photo' : 'Checking Open Food Facts database'}
+            </p>
+          </div>
+        )}
+
+        {/* Error */}
+        {error && (
+          <div className={styles.errorBox}>
+            ⚠️ {error}
+          </div>
+        )}
 
       {/* Product Card */}
       {product && (
@@ -429,6 +478,8 @@ const Scanner = () => {
         />
     )}
     </div>
+    </div>
+  </div>
   )
 }
 

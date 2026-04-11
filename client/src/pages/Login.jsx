@@ -32,30 +32,40 @@ const Login = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.card}>
+  <div className={styles.container}>
+    <div className={styles.card}>
 
-        <div className={styles.logo}>🌿</div>
-        <h1 className={styles.title}>Welcome Back</h1>
-        <p className={styles.subtitle}>Login to continue your green journey</p>
+      {/* Logo */}
+      <div className={styles.logoWrapper}>
+        <div className={styles.logoIcon}>🌿</div>
+        <span className={styles.logoText}>SnapGreen</span>
+      </div>
 
-        {error && <div className={styles.error}>{error}</div>}
+      <h1 className={styles.title}>Welcome Back</h1>
+      <p className={styles.subtitle}>Login to continue your green journey</p>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label>Email</label>
+      {error && <div className={styles.error}>⚠️ {error}</div>}
+
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputGroup}>
+          <label>Email Address</label>
+          <div className={styles.inputWrapper}>
+            <span className={styles.inputIcon}>📧</span>
             <input
               type='email'
               name='email'
-              placeholder='john@gmail.com'
+              placeholder='you@example.com'
               value={form.email}
               onChange={handleChange}
               required
             />
           </div>
+        </div>
 
-          <div className={styles.inputGroup}>
-            <label>Password</label>
+        <div className={styles.inputGroup}>
+          <label>Password</label>
+          <div className={styles.inputWrapper}>
+            <span className={styles.inputIcon}>🔒</span>
             <input
               type='password'
               name='password'
@@ -65,23 +75,36 @@ const Login = () => {
               required
             />
           </div>
+        </div>
 
-          <button
-            type='submit'
-            className={styles.button}
-            disabled={loading}
-          >
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
+        <button type='submit' className={styles.button} disabled={loading}>
+          {loading ? '⏳ Logging in...' : '→ Login'}
+        </button>
+      </form>
 
-        <p className={styles.switchText}>
-          Don't have an account? <Link to='/register'>Register</Link>
-        </p>
+      <p className={styles.switchText}>
+        Don't have an account? <Link to='/register'>Create one</Link>
+      </p>
 
+      {/* Features Strip */}
+      <div className={styles.features}>
+        <div className={styles.feature}>
+          <span className={styles.featureIcon}>📷</span>
+          <span>Scan Products</span>
+        </div>
+        <div className={styles.feature}>
+          <span className={styles.featureIcon}>🌍</span>
+          <span>Eco Scores</span>
+        </div>
+        <div className={styles.feature}>
+          <span className={styles.featureIcon}>🏆</span>
+          <span>Leaderboard</span>
+        </div>
       </div>
+
     </div>
-  )
+  </div>
+)
 }
 
 export default Login

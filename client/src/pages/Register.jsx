@@ -32,18 +32,25 @@ const Register = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.card}>
+  <div className={styles.container}>
+    <div className={styles.card}>
 
-        <div className={styles.logo}>🌿</div>
-        <h1 className={styles.title}>Join SnapGreen</h1>
-        <p className={styles.subtitle}>Start your sustainability journey</p>
+      {/* Logo */}
+      <div className={styles.logoWrapper}>
+        <div className={styles.logoIcon}>🌿</div>
+        <span className={styles.logoText}>SnapGreen</span>
+      </div>
 
-        {error && <div className={styles.error}>{error}</div>}
+      <h1 className={styles.title}>Create Account</h1>
+      <p className={styles.subtitle}>Start your sustainability journey today</p>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label>Full Name</label>
+      {error && <div className={styles.error}>⚠️ {error}</div>}
+
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputGroup}>
+          <label>Full Name</label>
+          <div className={styles.inputWrapper}>
+            <span className={styles.inputIcon}>👤</span>
             <input
               type='text'
               name='name'
@@ -53,21 +60,27 @@ const Register = () => {
               required
             />
           </div>
+        </div>
 
-          <div className={styles.inputGroup}>
-            <label>Email</label>
+        <div className={styles.inputGroup}>
+          <label>Email Address</label>
+          <div className={styles.inputWrapper}>
+            <span className={styles.inputIcon}>📧</span>
             <input
               type='email'
               name='email'
-              placeholder='john@gmail.com'
+              placeholder='you@example.com'
               value={form.email}
               onChange={handleChange}
               required
             />
           </div>
+        </div>
 
-          <div className={styles.inputGroup}>
-            <label>Password</label>
+        <div className={styles.inputGroup}>
+          <label>Password</label>
+          <div className={styles.inputWrapper}>
+            <span className={styles.inputIcon}>🔒</span>
             <input
               type='password'
               name='password'
@@ -77,23 +90,35 @@ const Register = () => {
               required
             />
           </div>
+        </div>
 
-          <button
-            type='submit'
-            className={styles.button}
-            disabled={loading}
-          >
-            {loading ? 'Creating account...' : 'Create Account'}
-          </button>
-        </form>
+        <button type='submit' className={styles.button} disabled={loading}>
+          {loading ? '⏳ Creating account...' : '→ Create Account'}
+        </button>
+      </form>
 
-        <p className={styles.switchText}>
-          Already have an account? <Link to='/login'>Login</Link>
-        </p>
+      <p className={styles.switchText}>
+        Already have an account? <Link to='/login'>Login</Link>
+      </p>
 
+      <div className={styles.features}>
+        <div className={styles.feature}>
+          <span className={styles.featureIcon}>📷</span>
+          <span>Scan Products</span>
+        </div>
+        <div className={styles.feature}>
+          <span className={styles.featureIcon}>🌍</span>
+          <span>Eco Scores</span>
+        </div>
+        <div className={styles.feature}>
+          <span className={styles.featureIcon}>🏆</span>
+          <span>Leaderboard</span>
+        </div>
       </div>
+
     </div>
-  )
+  </div>
+)
 }
 
 export default Register

@@ -1,6 +1,6 @@
 .container {
   max-width: 900px;
-  padding: 0 0 3rem;
+  padding: 0 0 4rem;
 }
 
 .centered {
@@ -24,100 +24,135 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* Header */
 .header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 2rem;
 }
-
-.backBtn {
-  background: #f0f4f0;
-  color: #2e7d32;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-}
-
-.backBtn:hover { background: #dcedc8; }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2e7d32;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
 }
 
 /* Stats */
 .statsRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .statCard {
   background: white;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.15s;
+}
+
+.statCard:hover { transform: translateY(-2px); }
+
+.statIconBox {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
 }
 
 .statNumber {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #2e7d32;
+  color: #1a1a1a;
+  line-height: 1;
+  margin-bottom: 0.2rem;
 }
 
 .statLabel {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: #888;
   font-weight: 500;
 }
 
 /* Filters */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+}
+
 .filters {
   display: flex;
   gap: 0.4rem;
-  margin-bottom: 1.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.3rem;
+  flex-wrap: wrap;
 }
 
 .filterBtn {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  /* rest stays same */
+  padding: 0.45rem 1rem;
+  border-radius: 99px;
+  border: 1.5px solid #e0e0e0;
+  background: white;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #777;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .filterBtn:hover {
   border-color: #4caf50;
-  color: #4caf50;
+  color: #2e7d32;
+  background: #f9fdf9;
 }
 
 .activeFilter {
-  background: #4caf50;
-  border-color: #4caf50;
+  background: #2e7d32;
+  border-color: #2e7d32;
   color: white;
 }
 
-.activeFilter:hover { color: white; }
+.activeFilter:hover {
+  background: #1b5e20;
+  border-color: #1b5e20;
+  color: white;
+}
 
+/* Error */
 .error {
   background: #fdecea;
   color: #c0392b;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  border: 1px solid #f5c6cb;
 }
 
 /* Empty State */
@@ -125,77 +160,96 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding: 3rem 1rem;
-  color: #aaa;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
   text-align: center;
 }
 
-.emptyState span { font-size: 3rem; }
-.emptyState p { font-size: 1rem; }
+.emptyIcon { font-size: 3.5rem; }
 
-.scanNowBtn {
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s;
+.emptyTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
-.scanNowBtn:hover { background: #43a047; }
+.emptyText { font-size: 0.88rem; color: #aaa; }
+
+.scanNowBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(46,125,50,0.25);
+}
+
+.scanNowBtn:hover { opacity: 0.9; }
 
 /* Scan List */
 .scanList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
 }
 
 .scanCard {
   background: white;
-  border-radius: 14px;
-  padding: 1rem;
+  border-radius: 16px;
+  padding: 1rem 1.1rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  transition: transform 0.15s;
+  gap: 0.85rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.scanCard:hover { transform: translateY(-1px); }
+.scanCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
 
 /* Image */
 .scanImageWrapper { flex-shrink: 0; }
 
 .scanImage {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
   border-radius: 10px;
   background: #f9f9f9;
   padding: 0.2rem;
+  border: 1px solid #f0f0f0;
 }
 
 .scanImagePlaceholder {
-  width: 60px;
-  height: 60px;
-  background: #f0f4f0;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #f0f4f0, #e8f5e9);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 /* Info */
 .scanInfo { flex: 1; min-width: 0; }
 
 .scanProductName {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #1a1a1a;
   white-space: nowrap;
@@ -204,16 +258,27 @@
   margin-bottom: 0.2rem;
 }
 
-.scanBrand {
-  font-size: 0.82rem;
-  color: #888;
-  margin-bottom: 0.2rem;
+.scanBrand { font-size: 0.78rem; color: #aaa; margin-bottom: 0.3rem; }
+
+.scanMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
-.scanMeta {
-  font-size: 0.78rem;
-  color: #bbb;
+.scanMethodBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: #f0f4f0;
+  color: #666;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 99px;
 }
+
+.scanDate { font-size: 0.72rem; color: #bbb; }
 
 /* Right Side */
 .scanRight {
@@ -225,32 +290,37 @@
 }
 
 .miniScore {
-  padding: 0.3rem 0.6rem;
+  padding: 0.3rem 0.55rem;
   border-radius: 8px;
   color: white;
   text-align: center;
-  min-width: 60px;
+  min-width: 52px;
 }
 
 .miniScoreLetter {
   font-size: 1.1rem;
   font-weight: 900;
   display: block;
+  line-height: 1;
 }
 
 .miniScoreLabel {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   opacity: 0.9;
   display: block;
+  margin-top: 0.1rem;
 }
 
 .deleteBtn {
   background: #fdecea;
   border: none;
   border-radius: 8px;
-  padding: 0.3rem 0.5rem;
+  padding: 0.35rem 0.45rem;
   cursor: pointer;
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e53935;
   transition: background 0.2s;
 }
 
