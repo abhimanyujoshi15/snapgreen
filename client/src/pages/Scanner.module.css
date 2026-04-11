@@ -15,7 +15,7 @@
 .title {
   font-size: 2.2rem;
   font-weight: 850;
-  color: #1a1a1a;
+  color: #059669;
   letter-spacing: -1px;
   margin-bottom: 0.5rem;
 }
@@ -174,7 +174,7 @@
 
 .manualSearch button {
   padding: 0 1.2rem;
-  background: #1e293b;
+  background: #059669;
   color: white;
   border: none;
   border-radius: 12px;
