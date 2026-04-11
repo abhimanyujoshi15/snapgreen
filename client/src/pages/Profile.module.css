@@ -1,193 +1,235 @@
 .container {
-  max-width: 900px;
-  padding: 0 0 3rem;
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 1.5rem 1.5rem 6rem;
+  font-family: 'Inter', sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-/* Hero */
-.hero {
-  background: linear-gradient(135deg, #2e7d32, #4caf50);
-  padding: 2.5rem 1.5rem 2rem;
+/* Header Section */
+.profileHeader {
+  background: white;
+  border-radius: 32px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  border: 1px solid #f1f5f9;
+}
+
+.topActions {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  color: white;
-  text-align: center;
-}
-
-.avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  border: 3px solid rgba(255,255,255,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 0.85rem;
-}
-
-.name {
-  font-size: 1.4rem;
-  font-weight: 800;
-  margin-bottom: 0.25rem;
-}
-
-.email {
-  font-size: 0.85rem;
-  opacity: 0.8;
   margin-bottom: 1.5rem;
 }
 
-.statsRow {
+.appLogo {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  background: rgba(255,255,255,0.15);
-  border-radius: 14px;
-  padding: 0.85rem 1.5rem;
-  width: 100%;
-  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  font-size: 0.9rem;
 }
 
-.stat {
+.settingsBtn {
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.userHero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1rem;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+}
+
+.levelBadge {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: white;
+  padding: 0.2rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.userName {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.userEmail {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* Stats Row */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.statBox {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  justify-content: center;
 }
 
-.statNum {
-  font-size: 1.4rem;
-  font-weight: 900;
+.statWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.statValue {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e293b;
 }
 
 .statLabel {
   font-size: 0.7rem;
-  opacity: 0.85;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
 }
 
-.divider {
-  width: 1px;
-  height: 32px;
-  background: rgba(255,255,255,0.3);
+/* Menu Styles */
+.sectionTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
 }
 
-/* Menu */
-.menu {
-  margin: 1.2rem 1rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .menuItem {
   width: 100%;
+  background: white;
+  border: 1px solid #f1f5f9;
+  padding: 1rem;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.2rem;
-  background: none;
-  border: none;
-  border-bottom: 1px solid #f5f5f5;
   cursor: pointer;
-  transition: background 0.15s;
-  text-align: left;
+  transition: all 0.2s;
 }
 
-.menuItem:last-child { border-bottom: none; }
-.menuItem:hover { background: #f9fdf9; }
+.menuItem:active {
+  transform: scale(0.98);
+  background: #f8fafc;
+}
 
-.menuIcon { font-size: 1.3rem; flex-shrink: 0; }
-
-.menuIconBox {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+.iconContainer {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  margin-right: 1rem;
 }
 
-.logoutBtn {
+.menuInfo {
+  flex: 1;
+  text-align: left;
+}
+
+.itemLabel {
+  display: block;
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.itemSub {
+  display: block;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.chevron {
+  color: #cbd5e1;
+}
+
+/* Footer Section */
+.footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.logoutButton {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 20px;
+  border: none;
+  background: #fee2e2;
+  color: #ef4444;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  /* rest stays same */
-}
-
-.menuText {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.menuLabel {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.menuSub { font-size: 0.78rem; color: #aaa; }
-
-.menuArrow {
-  font-size: 1.4rem;
-  color: #ccc;
-  font-weight: 300;
-}
-
-/* App Info */
-.appInfo {
-  margin: 0 1rem 1rem;
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-
-.appLogo { font-size: 2rem; margin-bottom: 0.3rem; }
-
-.appName {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #2e7d32;
-  margin-bottom: 0.2rem;
-}
-
-.appVersion {
-  font-size: 0.75rem;
-  color: #bbb;
-  margin-bottom: 0.5rem;
-}
-
-.appTagline {
-  font-size: 0.82rem;
-  color: #888;
-  font-style: italic;
-}
-
-/* Logout */
-.logoutSection {
-  padding: 0 1rem;
-}
-
-.logoutBtn {
-  width: 100%;
-  padding: 0.9rem;
-  background: #fdecea;
-  color: #e53935;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
-.logoutBtn:hover { background: #ffcdd2; }
+.logoutButton:hover {
+  background: #fecaca;
+}
+
+.versionInfo {
+  margin-top: 2rem;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}

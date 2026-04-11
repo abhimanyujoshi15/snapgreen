@@ -8,7 +8,10 @@ import {
   Trophy,
   LogOut,
   ChevronRight,
-  Leaf
+  Leaf,
+  Flame,
+  Award,
+  Settings
 } from 'lucide-react'
 
 const Profile = () => {
@@ -21,99 +24,117 @@ const Profile = () => {
   }
 
   const menuItems = [
-  {
-    icon: <Camera size={20} color='#2e7d32' />,
-    label: 'Scan a Product',
-    sub: 'Check eco impact',
-    action: () => navigate('/scanner'),
-    bg: '#e8f5e9'
-  },
-  {
-    icon: <ClipboardList size={20} color='#6a1b9a' />,
-    label: 'Scan History',
-    sub: 'View all past scans',
-    action: () => navigate('/history'),
-    bg: '#f3e5f5'
-  },
-  {
-    icon: <Medal size={20} color='#f57f17' />,
-    label: 'My Badges',
-    sub: `${user?.badges?.length || 0} earned`,
-    action: () => navigate('/badges'),
-    bg: '#fff8e1'
-  },
-  {
-    icon: <Trophy size={20} color='#1565c0' />,
-    label: 'Leaderboard',
-    sub: 'See global rankings',
-    action: () => navigate('/leaderboard'),
-    bg: '#e3f2fd'
-  },
-]
+    {
+      icon: <Camera size={22} />,
+      label: 'Scan a Product',
+      sub: 'Check eco impact instantly',
+      action: () => navigate('/scanner'),
+      color: '#10b981',
+      bg: '#ecfdf5'
+    },
+    {
+      icon: <ClipboardList size={22} />,
+      label: 'My History',
+      sub: 'Past scans and impacts',
+      action: () => navigate('/history'),
+      color: '#6366f1',
+      bg: '#eef2ff'
+    },
+    {
+      icon: <Medal size={22} />,
+      label: 'Achievement Badges',
+      sub: `${user?.badges?.length || 0} milestones unlocked`,
+      action: () => navigate('/badges'),
+      color: '#f59e0b',
+      bg: '#fffbeb'
+    },
+    {
+      icon: <Trophy size={22} />,
+      label: 'Global Leaderboard',
+      sub: 'See how you rank',
+      action: () => navigate('/leaderboard'),
+      color: '#3b82f6',
+      bg: '#eff6ff'
+    },
+  ]
 
   return (
     <div className={styles.container}>
-
-      {/* Profile Hero */}
-      <div className={styles.hero}>
-        <div className={styles.avatar}>
-          {user?.name?.charAt(0).toUpperCase()}
+      {/* Profile Header Card */}
+      <div className={styles.profileHeader}>
+        <div className={styles.topActions}>
+           <div className={styles.appLogo}>
+             <Leaf size={20} fill="#10b981" color="#10b981" />
+             <span>SnapGreen</span>
+           </div>
+           <button className={styles.settingsBtn}><Settings size={20} /></button>
         </div>
-        <h1 className={styles.name}>{user?.name}</h1>
-        <p className={styles.email}>{user?.email}</p>
 
-        {/* Stats Row */}
-        <div className={styles.statsRow}>
-          <div className={styles.stat}>
-            <span className={styles.statNum}>{user?.greenScore || 0}</span>
-            <span className={styles.statLabel}>Green Score</span>
+        <div className={styles.userHero}>
+          <div className={styles.avatarWrapper}>
+            <div className={styles.avatar}>
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+            <div className={styles.levelBadge}>Level 4</div>
           </div>
-          <div className={styles.divider} />
-          <div className={styles.stat}>
-            <span className={styles.statNum}>{user?.streakCount || 0}</span>
-            <span className={styles.statLabel}>Day Streak 🔥</span>
+          <h1 className={styles.userName}>{user?.name}</h1>
+          <p className={styles.userEmail}>{user?.email}</p>
+        </div>
+
+        <div className={styles.statsGrid}>
+          <div className={styles.statBox}>
+            <span className={styles.statValue}>{user?.greenScore || 0}</span>
+            <span className={styles.statLabel}>Green Pts</span>
           </div>
-          <div className={styles.divider} />
-          <div className={styles.stat}>
-            <span className={styles.statNum}>{user?.badges?.length || 0}</span>
-            <span className={styles.statLabel}>Badges 🏅</span>
+          <div className={styles.statBox}>
+            <div className={styles.statWithIcon}>
+               <span className={styles.statValue}>{user?.streakCount || 0}</span>
+               <Flame size={16} color="#ef4444" fill="#ef4444" />
+            </div>
+            <span className={styles.statLabel}>Day Streak</span>
+          </div>
+          <div className={styles.statBox}>
+            <div className={styles.statWithIcon}>
+               <span className={styles.statValue}>{user?.badges?.length || 0}</span>
+               <Award size={16} color="#f59e0b" fill="#f59e0b" />
+            </div>
+            <span className={styles.statLabel}>Badges</span>
           </div>
         </div>
       </div>
 
-      {/* Menu Items */}
-      <div className={styles.menu}>
-        {menuItems.map((item, i) => (
-          <button key={i} className={styles.menuItem} onClick={item.action}>
-            <div className={styles.menuIconBox} style={{ background: item.bg }}>
-              {item.icon}
-            </div>
-            <div className={styles.menuText}>
-              <span className={styles.menuLabel}>{item.label}</span>
-              <span className={styles.menuSub}>{item.sub}</span>
-            </div>
-            <ChevronRight size={18} color='#ccc' />
+      {/* Main Menu */}
+      <div className={styles.menuSection}>
+        <h3 className={styles.sectionTitle}>Quick Actions</h3>
+        <div className={styles.menuList}>
+          {menuItems.map((item, i) => (
+            <button key={i} className={styles.menuItem} onClick={item.action}>
+              <div className={styles.iconContainer} style={{ background: item.bg, color: item.color }}>
+                {item.icon}
+              </div>
+              <div className={styles.menuInfo}>
+                <span className={styles.itemLabel}>{item.label}</span>
+                <span className={styles.itemSub}>{item.sub}</span>
+              </div>
+              <ChevronRight size={18} className={styles.chevron} />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer Info */}
+      <div className={styles.footer}>
+        <div className={styles.logoutWrapper}>
+          <button className={styles.logoutButton} onClick={handleLogout}>
+            <LogOut size={18} />
+            <span>Sign Out</span>
           </button>
-        ))}
+        </div>
+        <div className={styles.versionInfo}>
+          <p>SnapGreen v1.0.4 (Beta)</p>
+          <p>Together for a greener planet 🌍</p>
+        </div>
       </div>
-
-      {/* App Info */}
-      <div className={styles.appInfo}>
-        <div className={styles.appLogo}>🌿</div>
-        <p className={styles.appName}>SnapGreen</p>
-        <p className={styles.appVersion}>Version 1.0.0</p>
-        <p className={styles.appTagline}>
-          Making every purchase a green choice
-        </p>
-      </div>
-
-      {/* Logout */}
-      <div className={styles.logoutSection}>
-        <button className={styles.logoutBtn} onClick={handleLogout}>
-          <LogOut size={18} /> Logout
-        </button>
-      </div>
-
     </div>
   )
 }

@@ -9,7 +9,11 @@ import {
   Camera,
   Leaf,
   AlertTriangle,
-  Trash2
+  Trash2,
+  Package,
+  Search,
+  ChevronRight,
+  Loader2
 } from 'lucide-react'
 
 const History = () => {
@@ -39,7 +43,8 @@ const History = () => {
     }
   }
 
-  const handleDelete = async (scanId) => {
+  const handleDelete = async (e, scanId) => {
+    e.stopPropagation() // Prevent navigating to product details
     setDeleting(scanId)
     try {
       await API.delete(`/api/scans/${scanId}`, {
@@ -55,27 +60,16 @@ const History = () => {
 
   const getScoreColor = (score) => {
     const colors = {
-      A: '#2e7d32', B: '#558b2f',
-      C: '#f9a825', D: '#e65100',
-      E: '#b71c1c', F: '#b71c1c'
+      A: '#10b981', B: '#34d399',
+      C: '#f59e0b', D: '#f97316',
+      E: '#ef4444', F: '#b91c1c'
     }
-    return colors[score] || '#888'
-  }
-
-  const getScoreLabel = (score) => {
-    const labels = {
-      A: 'Excellent', B: 'Good',
-      C: 'Average', D: 'Poor',
-      E: 'Very Poor', F: 'Harmful'
-    }
-    return labels[score] || 'Unknown'
+    return colors[score] || '#94a3b8'
   }
 
   const formatDate = (dateStr) => {
-    const date = new Date(dateStr)
-    return date.toLocaleDateString('en-IN', {
-      day: 'numeric', month: 'short', year: 'numeric',
-      hour: '2-digit', minute: '2-digit'
+    return new Date(dateStr).toLocaleDateString('en-IN', {
+      day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
     })
   }
 
@@ -88,57 +82,61 @@ const History = () => {
     return true
   })
 
-  // Stats
   const totalScans = scans.length
   const goodScans = scans.filter(s => ['A', 'B'].includes(s.ecoScoreAtScan)).length
-  const uniqueProducts = new Set(scans.map(s => s.productId?._id)).size
+  const greenRate = totalScans > 0 ? Math.round((goodScans / totalScans) * 100) : 0
 
   if (loading) return (
     <div className={styles.centered}>
-      <div className={styles.spinner} />
-      <p>Loading history...</p>
+      <Loader2 className={styles.spinner} size={40} />
+      <p>Fetching your green logs...</p>
     </div>
   )
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>📋 Scan History</h1>
-      </div>
+      <header className={styles.pageHeader}>
+        <div>
+          <h1 className={styles.title}>Your Activity</h1>
+          <p className={styles.subtitle}>Tracking your environmental impact</p>
+        </div>
+      </header>
 
-      {/* Stats Row */}
-      <div className={styles.statsRow}>
-        {[
-          { icon: '🔍', num: totalScans, label: 'Total Scans', bg: '#e3f2fd', color: '#1565c0' },
-          { icon: '📦', num: uniqueProducts, label: 'Unique Products', bg: '#f3e5f5', color: '#6a1b9a' },
-          { icon: '🌿', num: `${totalScans > 0 ? Math.round((goodScans / totalScans) * 100) : 0}%`, label: 'Green Choices', bg: '#e8f5e9', color: '#2e7d32' },
-        ].map((s, i) => (
-          <div key={i} className={styles.statCard}>
-            <div className={styles.statIconBox} style={{ background: s.bg }}>
-              <span style={{ fontSize: '1.3rem' }}>{s.icon}</span>
-            </div>
-            <div>
-              <div className={styles.statNumber} style={{ color: s.color }}>{s.num}</div>
-              <div className={styles.statLabel}>{s.label}</div>
-            </div>
+      {/* Modern Stats Grid */}
+      <div className={styles.statsGrid}>
+        <div className={styles.statCard}>
+          <div className={`${styles.iconCircle} ${styles.blue}`}>
+            <Search size={20} />
           </div>
-        ))}
+          <div className={styles.statInfo}>
+            <span className={styles.statValue}>{totalScans}</span>
+            <span className={styles.statLabel}>Total Scans</span>
+          </div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={`${styles.iconCircle} ${styles.green}`}>
+            <Leaf size={20} />
+          </div>
+          <div className={styles.statInfo}>
+            <span className={styles.statValue}>{greenRate}%</span>
+            <span className={styles.statLabel}>Eco-Positive</span>
+          </div>
+        </div>
       </div>
 
-      {/* Filter Bar */}
-      <div className={styles.filterBar}>
-        <span className={styles.filterLabel}>Filter:</span>
-        <div className={styles.filters}>
+      {/* Filter Chips */}
+      <div className={styles.filterSection}>
+        <div className={styles.chipContainer}>
           {[
-            { key: 'all', label: 'All Scans', icon: <HistoryIcon size={13} /> },
-            { key: 'good', label: 'Green', icon: <Leaf size={13} /> },
-            { key: 'bad', label: 'Poor', icon: <AlertTriangle size={13} /> },
-            { key: 'barcode', label: 'Barcode', icon: <ScanBarcode size={13} /> },
-            { key: 'photo', label: 'Photo', icon: <Camera size={13} /> },
+            { key: 'all', label: 'All', icon: <HistoryIcon size={14} /> },
+            { key: 'good', label: 'Eco-Friendly', icon: <Leaf size={14} /> },
+            { key: 'bad', label: 'High Impact', icon: <AlertTriangle size={14} /> },
+            { key: 'barcode', label: 'Barcodes', icon: <ScanBarcode size={14} /> },
+            { key: 'photo', label: 'Photos', icon: <Camera size={14} /> },
           ].map(f => (
             <button
               key={f.key}
-              className={`${styles.filterBtn} ${filter === f.key ? styles.activeFilter : ''}`}
+              className={`${styles.chip} ${filter === f.key ? styles.activeChip : ''}`}
               onClick={() => setFilter(f.key)}
             >
               {f.icon} {f.label}
@@ -147,88 +145,74 @@ const History = () => {
         </div>
       </div>
 
-      {error && <div className={styles.error}>{error}</div>}
+      {error && <div className={styles.errorAlert}>{error}</div>}
 
-      {/* Empty State */}
-      {filteredScans.length === 0 && !loading && (
-        <div className={styles.emptyState}>
-          <span className={styles.emptyIcon}>🔍</span>
-          <p className={styles.emptyTitle}>No scans found</p>
-          <p className={styles.emptyText}>
-            {filter === 'all' ? 'Start scanning products to build your history' : 'No scans match this filter'}
-          </p>
-          {filter === 'all' && (
-            <button className={styles.scanNowBtn} onClick={() => navigate('/scanner')}>
-              <Camera size={16} /> Scan a Product
+      {/* Content Area */}
+      <div className={styles.scansList}>
+        {filteredScans.length === 0 ? (
+          <div className={styles.emptyContainer}>
+            <div className={styles.emptyIllustration}>📦</div>
+            <h3>No entries found</h3>
+            <p>Your history is currently empty or filtered out.</p>
+            <button className={styles.ctaBtn} onClick={() => navigate('/scanner')}>
+              Start Scanning
             </button>
-          )}
-        </div>
-      )}
-
-      {/* ✅ Fixed Scan Cards */}
-      {filteredScans.map(scan => {
-        const product = scan.productId || {}
-
-        return (
-          <div key={scan._id} className={styles.scanCard}>
-            <div className={styles.scanImageWrapper}>
-              {product.imageUrl ? (
-                <img src={product.imageUrl} alt={product.name} className={styles.scanImage} />
-              ) : (
-                <div className={styles.scanImagePlaceholder}>
-                  {scan.scanMethod === 'photo' ? '📸' : '📦'}
-                </div>
-              )}
-            </div>
-
-            <div className={styles.scanInfo}>
-              <p className={styles.scanProductName}>{product.name}</p>
-              <p className={styles.scanBrand}>{product.brand}</p>
-
-              <div className={styles.scanMetaRow}>
-                <span className={styles.scanMethodBadge}>
-                  {scan.scanMethod === 'photo' ? (
-                    <>
-                      <Camera size={10} /> Photo
-                    </>
-                  ) : (
-                    <>
-                      <ScanBarcode size={10} /> Barcode
-                    </>
-                  )}
-                </span>
-
-                <span className={styles.scanDate}>
-                  {formatDate(scan.createdAt)}
-                </span>
-              </div>
-            </div>
-
-            <div className={styles.scanRight}>
-              <div
-                className={styles.miniScore}
-                style={{ backgroundColor: getScoreColor(scan.ecoScoreAtScan) }}
-              >
-                <span className={styles.miniScoreLetter}>
-                  {scan.ecoScoreAtScan}
-                </span>
-                <span className={styles.miniScoreLabel}>
-                  {getScoreLabel(scan.ecoScoreAtScan)}
-                </span>
-              </div>
-
-              <button
-                className={styles.deleteBtn}
-                onClick={() => handleDelete(scan._id)}
-                disabled={deleting === scan._id}
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
           </div>
-        )
-      })}
+        ) : (
+          filteredScans.map(scan => (
+            <div 
+              key={scan._id} 
+              className={styles.scanCard}
+              onClick={() => navigate(`/product/${scan.productId?._id}`)}
+            >
+              <div className={styles.productImgWrapper}>
+                {scan.productId?.imageUrl ? (
+                  <img src={scan.productId.imageUrl} alt="" />
+                ) : (
+                  <div className={styles.imgPlaceholder}>
+                    <Package size={24} color="#94a3b8" />
+                  </div>
+                )}
+              </div>
 
+              <div className={styles.mainContent}>
+                <div className={styles.productDetails}>
+                  <h4 className={styles.productName}>{scan.productId?.name || 'Unknown Product'}</h4>
+                  <p className={styles.brandName}>{scan.productId?.brand || 'Generic Brand'}</p>
+                  <div className={styles.metaInfo}>
+                    <span className={styles.methodTag}>
+                      {scan.scanMethod === 'photo' ? <Camera size={12} /> : <ScanBarcode size={12} />}
+                      {scan.scanMethod}
+                    </span>
+                    <span className={styles.dateText}>{formatDate(scan.createdAt)}</span>
+                  </div>
+                </div>
+
+                <div className={styles.rightAction}>
+                  <div 
+                    className={styles.scoreBadge} 
+                    style={{ '--score-color': getScoreColor(scan.ecoScoreAtScan) }}
+                  >
+                    {scan.ecoScoreAtScan}
+                  </div>
+                  <button 
+                    className={styles.deleteIconButton}
+                    onClick={(e) => handleDelete(e, scan._id)}
+                    disabled={deleting === scan._id}
+                  >
+                    {deleting === scan._id ? (
+                      <Loader2 size={16} className={styles.spin} />
+                    ) : (
+                      <Trash2 size={16} />
+                    )}
+                  </button>
+                </div>
+              </div>
+              <ChevronRight className={styles.arrowIcon} size={18} />
+            </div>
+          ))
+        )}
+      </div>
     </div>
   )
 }
