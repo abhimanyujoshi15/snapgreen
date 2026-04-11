@@ -10,7 +10,11 @@ import {
   Search,
   RefreshCw,
   Share2,
-  Package
+  Leaf,
+  Info,
+  ChevronRight,
+  ExternalLink,
+  ShoppingBag
 } from 'lucide-react'
 
 const Scanner = () => {
@@ -45,7 +49,7 @@ const Scanner = () => {
       })
       setProduct(res.data.product)
     } catch (err) {
-      setError(err.response?.data?.message || 'Product not found')
+      setError(err.response?.data?.message || 'Product not found in our green database')
     } finally {
       setLoading(false)
     }
@@ -60,8 +64,7 @@ const Scanner = () => {
     const file = e.target.files[0]
     if (!file) return
 
-    const previewUrl = URL.createObjectURL(file)
-    setPhotoPreview(previewUrl)
+    setPhotoPreview(URL.createObjectURL(file))
     setError('')
     setProduct(null)
     setLoading(true)
@@ -74,14 +77,14 @@ const Scanner = () => {
         reader.readAsDataURL(file)
       })
 
-      const res = await API.post(
-  '/api/product/photo',
-  { imageBase64: base64, mimeType: file.type }
-)
+      const res = await API.post('/api/product/photo', { 
+        imageBase64: base64, 
+        mimeType: file.type 
+      })
 
       setProduct(res.data.product)
     } catch (err) {
-      setError(err.response?.data?.message || 'Could not identify product')
+      setError(err.response?.data?.message || 'Gemini AI couldn’t identify this product.')
     } finally {
       setLoading(false)
     }
@@ -89,345 +92,200 @@ const Scanner = () => {
 
   const getScoreColor = (score) => {
     const colors = {
-      A: '#2e7d32', B: '#558b2f',
-      C: '#f9a825', D: '#e65100',
-      E: '#b71c1c', F: '#b71c1c'
+      A: '#10b981', B: '#84cc16',
+      C: '#f59e0b', D: '#f97316',
+      E: '#ef4444', F: '#991b1b'
     }
-    return colors[score] || '#888'
-  }
-
-  const getScoreLabel = (score) => {
-    const labels = {
-      A: 'Excellent 🌟', B: 'Good 👍',
-      C: 'Average 😐', D: 'Poor 👎',
-      E: 'Very Poor ⚠️', F: 'Harmful ❌'
-    }
-    return labels[score] || 'Unknown'
+    return colors[score] || '#64748b'
   }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>🌿 Scan a Product</h1>
-      <p className={styles.subtitle}>Check the eco impact of any product</p>
-
-      {/* Tabs */}
-          <div className={styles.tabs}>
-            <button
-              className={`${styles.tab} ${activeTab === 'barcode' ? styles.activeTab : ''}`}
-              onClick={() => { setActiveTab('barcode'); setScanning(false); setProduct(null); setError('') }}
-            >
-              <ScanBarcode size={16} /> Barcode
-            </button>
-            <button
-              className={`${styles.tab} ${activeTab === 'photo' ? styles.activeTab : ''}`}
-              onClick={() => { setActiveTab('photo'); setScanning(false); setProduct(null); setError('') }}
-            >
-              <Camera size={16} /> Photo
-            </button>
-          </div>
-
-      {/* Barcode Tab */}
-      {activeTab === 'barcode' && (
-        <div>
-          {/* Scan Button */}
-              <button
-                className={`${styles.scanButton} ${scanning ? styles.scanning : ''}`}
-                onClick={() => { setScanning(!scanning); setError(''); setProduct(null) }}
-              >
-                {scanning
-                  ? <><RefreshCw size={18} /> Stop Scanning</>
-                  : <><Camera size={18} /> Start Camera Scanner</>
-                }
-              </button>
-
-
-          {scanning && (
-            <div className={styles.cameraWrapper}>
-              <video ref={ref} className={styles.camera} />
-              <div className={styles.scanOverlay}>
-                <div className={styles.scanLine} />
-              </div>
-              <p className={styles.cameraHint}>Point camera at a barcode</p>
-            </div>
-          )}
-
-          <form onSubmit={handleManualSearch} className={styles.manualForm}>
-            <input
-              type='text'
-              placeholder='Or enter barcode manually...'
-              value={barcode}
-              onChange={(e) => setBarcode(e.target.value)}
-              className={styles.input}
-            />
-            <button type='submit' className={styles.searchButton}>
-              <Search size={18} />
-              Search
-            </button>
-          </form>
-        </div>
-      )}
-
-      {/* Photo Tab */}
-      {activeTab === 'photo' && (
-        <div className={styles.photoTab}>
-          <label className={styles.photoUploadLabel}>
-            <input
-              type='file'
-              accept='image/*'
-              capture='environment'
-              onChange={handlePhotoUpload}
-              className={styles.photoInput}
-            />
-            <div className={styles.photoUploadBox}>
-              {photoPreview ? (
-                <img src={photoPreview} alt='Preview' className={styles.photoPreview} />
-              ) : (
-                <>
-                  <span className={styles.photoIcon}>📷</span>
-                  <p>Click to take a photo or upload</p>
-                  <span className={styles.photoHint}>Gemini AI will identify the product</span>
-                </>
-              )}
-            </div>
-          </label>
-
-          {photoPreview && !loading && (
-              <button
-                className={styles.retakeButton}
-                onClick={() => { setPhotoPreview(null); setProduct(null); setError('') }}
-              >
-                <RefreshCw size={16} /> Scan Another
-              </button>
-          )}
-        </div>
-      )}
-
-      {/* Loading */}
-      {loading && (
-        <div className={styles.loading}>
-          <div className={styles.spinner} />
-          <p>{activeTab === 'photo' ? 'Gemini is identifying product...' : 'Fetching product data...'}</p>
-        </div>
-      )}
-
-      {/* Error */}
-      {error && <div className={styles.error}>{error}</div>}
-
-      {/* Product Card */}
-      {product && (
-        <div className={styles.productCard}>
-
-          {/* Product Header */}
-          <div className={styles.productHeader}>
-            {product.imageUrl && (
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className={styles.productImage}
-              />
-            )}
-            <div className={styles.productInfo}>
-              <h2 className={styles.productName}>{product.name}</h2>
-              <p className={styles.productBrand}>{product.brand}</p>
-              <p className={styles.productCategory}>📦 {product.category}</p>
-            </div>
-          </div>
-
-          {/* Eco Score Hero */}
-          <div
-            className={styles.ecoScoreHero}
-            style={{ background: `linear-gradient(135deg, ${getScoreColor(product.ecoScore)}, ${getScoreColor(product.ecoScore)}cc)` }}
-          >
-            <div className={styles.ecoScoreLeft}>
-              <span className={styles.ecoScoreLetter}>{product.ecoScore}</span>
-              <div>
-                <span className={styles.ecoScoreLabel}>{getScoreLabel(product.ecoScore)}</span>
-                <span className={styles.ecoScoreSub}>Eco Score</span>
-              </div>
-            </div>
-            <div className={styles.ecoScoreRight}>
-              <span className={styles.overallScore}>{product.overallScore}</span>
-              <span className={styles.overallScoreLabel}>/ 100</span>
-            </div>
-          </div>
-
-          {/* Impact Summary */}
-          {product.impactSummary && (
-            <div className={styles.section}>
-              <h3 className={styles.sectionTitle}>🌍 Environmental Impact</h3>
-              <p className={styles.impactText}>{product.impactSummary}</p>
-            </div>
-          )}
-
-          {/* Fun Fact */}
-          {product.funFact && (
-            <div className={styles.funFact}>
-              <span>💡</span>
-              <p><strong>Did you know?</strong> {product.funFact}</p>
-            </div>
-          )}
-
-          {/* Score Bars */}
-          <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>📊 Detailed Scores</h3>
-            <div className={styles.scoreBars}>
-              {[
-                { label: '📦 Packaging', value: product.packagingScore, detail: product.packagingDetail },
-                { label: '🌱 Sourcing', value: product.sourcingScore, detail: product.sourcingDetail },
-                { label: '🏭 Overall', value: product.overallScore, detail: product.manufacturingDetail },
-              ].map((item) => (
-                <div key={item.label} className={styles.scoreBarGroup}>
-                  <div className={styles.scoreBar}>
-                    <span className={styles.scoreBarLabel}>{item.label}</span>
-                    <div className={styles.barTrack}>
-                      <div
-                        className={styles.barFill}
-                        style={{
-                          width: `${item.value}%`,
-                          backgroundColor: item.value > 60
-                            ? '#4caf50' : item.value > 30
-                            ? '#ff9800' : '#f44336'
-                        }}
-                      />
-                    </div>
-                    <span className={styles.scoreBarValue}>{item.value}/100</span>
-                  </div>
-                  {item.detail && (
-                    <p className={styles.scoreDetail}>{item.detail}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Carbon Footprint */}
-          {product.carbonFootprint && (
-            <div className={styles.carbonBox}>
-              <div className={styles.carbonIcon}>💨</div>
-              <div>
-                <strong>Carbon Footprint</strong>
-                <p>{product.carbonFootprint}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Tips */}
-          {product.tips?.length > 0 && (
-            <div className={styles.section}>
-              <h3 className={styles.sectionTitle}>♻️ How to Reduce Impact</h3>
-              <div className={styles.tips}>
-                {product.tips.map((tip, i) => (
-                  <div key={i} className={styles.tip}>
-                    <span className={styles.tipNumber}>{i + 1}</span>
-                    <p>{tip}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Greener Alternatives */}
-          {product.alternatives?.length > 0 && (
-            <div className={styles.section}>
-              <h3 className={styles.sectionTitle}>💚 Greener Indian Alternatives</h3>
-              <p className={styles.altSubtitle}>Switch to these for a smaller carbon footprint</p>
-              {product.alternatives.map((alt, i) => (
-                <div key={i} className={styles.altCard}>
-
-                  {/* Alt Header */}
-                  <div className={styles.altHeader}>
-                    <div
-                      className={styles.altScoreBadge}
-                      style={{ backgroundColor: getScoreColor(alt.ecoScore) }}
-                    >
-                      {alt.ecoScore}
-                    </div>
-                    <div className={styles.altTitleGroup}>
-                      <strong className={styles.altName}>{alt.name}</strong>
-                      <span className={styles.altBrand}>{alt.brand}</span>
-                    </div>
-                    <div className={styles.altScoreNum}>
-                      <span>{alt.overallScore}</span>
-                      <small>/100</small>
-                    </div>
-                  </div>
-
-                  {/* Key Benefit Tag */}
-                  {alt.keyBenefit && (
-                    <div className={styles.keyBenefit}>
-                      🌿 {alt.keyBenefit}
-                    </div>
-                  )}
-
-                  {/* Reason */}
-                  <p className={styles.altReason}>{alt.reason}</p>
-
-                  {/* CO2 Saved */}
-                  <div className={styles.co2Saved}>
-                    🍃 {alt.co2Saved}
-                  </div>
-
-                  {/* Price & Where to Buy */}
-                  <div className={styles.altMeta}>
-                    {alt.estimatedPrice && (
-                      <div className={styles.altPrice}>
-                        <span className={styles.altMetaLabel}>💰 Price</span>
-                        <span className={styles.altMetaValue}>{alt.estimatedPrice}</span>
-                      </div>
-                    )}
-                    {alt.whereToBuy?.length > 0 && (
-                      <div className={styles.altWhere}>
-                        <span className={styles.altMetaLabel}>🛒 Available at</span>
-                        <div className={styles.whereTags}>
-                          {alt.whereToBuy.map((place, j) => (
-                            <span key={j} className={styles.whereTag}>{place}</span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Search Button */}
-                  {alt.searchQuery && (
-                      <a
-                      href={`https://www.google.com/search?q=${encodeURIComponent(alt.searchQuery + ' buy online India')}`}
-                      target='_blank'
-                      rel='noreferrer'
-                      className={styles.searchBtn}
-                    >
-                      🔍 Find & Buy Online
-                    </a>
-                  )}
-
-                </div>
-
-                
-              ))}
-            </div>
-          )}
-
+      {/* --- HEADER SECTION --- */}
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.title}>Eco Scanner</h1>
+          <p className={styles.subtitle}>Scan to reveal the environmental truth.</p>
         </div>
 
-        
-      )}
-
-      {/* Share Button */}
-        <div className={styles.shareSection}>
+        <div className={styles.tabSwitcher}>
           <button
-            className={styles.shareCardBtn}
-            onClick={() => setShowShareCard(true)}
+            className={`${styles.tabBtn} ${activeTab === 'barcode' ? styles.activeTab : ''}`}
+            onClick={() => { setActiveTab('barcode'); setScanning(false); setError(''); setProduct(null) }}
           >
-            <Share2 size={18} /> Share My Eco Score Card
+            <ScanBarcode size={20} />
+            <span>Barcode</span>
+          </button>
+          <button
+            className={`${styles.tabBtn} ${activeTab === 'photo' ? styles.activeTab : ''}`}
+            onClick={() => { setActiveTab('photo'); setScanning(false); setError(''); setProduct(null) }}
+          >
+            <Camera size={20} />
+            <span>AI Photo</span>
           </button>
         </div>
+      </header>
 
-      {/* Share Card Modal */}
+      <main className={styles.mainContent}>
+        {/* --- INPUT METHODS --- */}
+        {!product && !loading && (
+          <div className={styles.inputSection}>
+            {activeTab === 'barcode' ? (
+              <div className={styles.barcodeCard}>
+                <button
+                  className={`${styles.primaryBtn} ${scanning ? styles.pulse : ''}`}
+                  onClick={() => { setScanning(!scanning); setError('') }}
+                >
+                  {scanning ? <RefreshCw className={styles.spin} /> : <ScanBarcode />}
+                  {scanning ? 'Stop Camera' : 'Start Scanning'}
+                </button>
+
+                {scanning && (
+                  <div className={styles.viewportContainer}>
+                    <video ref={ref} className={styles.videoFeed} />
+                    <div className={styles.scannerOverlay}>
+                      <div className={styles.laser} />
+                    </div>
+                  </div>
+                )}
+
+                <form onSubmit={handleManualSearch} className={styles.manualSearch}>
+                  <input
+                    type="text"
+                    placeholder="Enter barcode manually..."
+                    value={barcode}
+                    onChange={(e) => setBarcode(e.target.value)}
+                  />
+                  <button type="submit"><Search size={20} /></button>
+                </form>
+              </div>
+            ) : (
+              <label className={styles.photoUploadArea}>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  capture="environment" 
+                  onChange={handlePhotoUpload} 
+                  hidden 
+                />
+                <div className={styles.uploadPlaceholder}>
+                  <div className={styles.iconCircle}><Camera size={32} /></div>
+                  <h3>Take a Photo</h3>
+                  <p>Our AI will identify the product & its impact</p>
+                </div>
+              </label>
+            )}
+          </div>
+        )}
+
+        {/* --- STATUS STATES --- */}
+        {loading && (
+          <div className={styles.loadingState}>
+            <div className={styles.loader}></div>
+            <p>{activeTab === 'photo' ? 'Gemini AI is analyzing...' : 'Fetching eco-data...'}</p>
+          </div>
+        )}
+
+        {error && <div className={styles.errorMessage}><Info size={18} /> {error}</div>}
+
+        {/* --- RESULTS SECTION --- */}
+        {product && (
+          <div className={styles.resultsContainer}>
+            {/* 1. Main Product Card */}
+            <div className={styles.productHero}>
+              <div className={styles.productMainInfo}>
+                {product.imageUrl && <img src={product.imageUrl} alt={product.name} className={styles.prodImg} />}
+                <div>
+                  <span className={styles.categoryBadge}>{product.category}</span>
+                  <h2 className={styles.prodName}>{product.name}</h2>
+                  <p className={styles.prodBrand}>{product.brand}</p>
+                </div>
+              </div>
+
+              <div 
+                className={styles.scoreCircle} 
+                style={{ '--score-color': getScoreColor(product.ecoScore) }}
+              >
+                <div className={styles.scoreInner}>
+                  <span className={styles.scoreLetter}>{product.ecoScore}</span>
+                  <span className={styles.scorePercent}>{product.overallScore}/100</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Impact Summary */}
+            <section className={styles.infoCard}>
+              <h3 className={styles.cardTitle}><Leaf size={18} /> Impact Insight</h3>
+              <p className={styles.impactText}>{product.impactSummary}</p>
+              {product.funFact && (
+                <div className={styles.factBox}>
+                  <strong>Did you know?</strong> {product.funFact}
+                </div>
+              )}
+            </section>
+
+            {/* 3. Detailed Scores Grid */}
+            <div className={styles.scoreGrid}>
+              {[
+                { label: 'Packaging', val: product.packagingScore, icon: '📦' },
+                { label: 'Sourcing', val: product.sourcingScore, icon: '🌱' },
+                { label: 'Carbon', val: product.carbonFootprint, icon: '💨', isText: true }
+              ].map((item, idx) => (
+                <div key={idx} className={styles.gridItem}>
+                  <span className={styles.gridIcon}>{item.icon}</span>
+                  <span className={styles.gridLabel}>{item.label}</span>
+                  <span className={styles.gridVal}>{item.isText ? item.val : `${item.val}/100`}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* 4. Alternatives Section */}
+            {product.alternatives?.length > 0 && (
+              <section className={styles.alternativesSection}>
+                <h3 className={styles.cardTitle}>Better for the Planet</h3>
+                <div className={styles.altList}>
+                  {product.alternatives.map((alt, i) => (
+                    <div key={i} className={styles.altCard}>
+                      <div className={styles.altHeader}>
+                        <div className={styles.altScore} style={{ background: getScoreColor(alt.ecoScore) }}>
+                          {alt.ecoScore}
+                        </div>
+                        <div className={styles.altMeta}>
+                          <strong>{alt.name}</strong>
+                          <span>{alt.brand} • {alt.estimatedPrice}</span>
+                        </div>
+                        <a 
+                          href={`https://www.google.com/search?q=${encodeURIComponent(alt.searchQuery + ' buy India')}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.buyBtn}
+                        >
+                          <ShoppingBag size={16} />
+                        </a>
+                      </div>
+                      <p className={styles.altReason}>{alt.reason}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 5. Actions */}
+            <div className={styles.actionFooter}>
+              <button className={styles.resetBtn} onClick={() => { setProduct(null); setPhotoPreview(null) }}>
+                <RefreshCw size={18} /> Scan Another
+              </button>
+              <button className={styles.shareBtn} onClick={() => setShowShareCard(true)}>
+                <Share2 size={18} /> Share Result
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+
       {showShareCard && (
-        <ShareCard
-          product={product}
-          onClose={() => setShowShareCard(false)}
-        />
-    )}
+        <ShareCard product={product} onClose={() => setShowShareCard(false)} />
+      )}
     </div>
   )
 }
