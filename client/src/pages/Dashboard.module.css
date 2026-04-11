@@ -38,7 +38,7 @@
   font-weight: 700;
   font-size: 0.85rem;
   border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px -1px #059669;
 }
 
 /* Hero Stats Section */
@@ -50,7 +50,7 @@
 }
 
 .mainScoreCard {
-  background: linear-gradient(135deg, #1e293b, #0f172a);
+  background: #059669;
   border-radius: 24px;
   padding: 1.5rem;
   color: white;
