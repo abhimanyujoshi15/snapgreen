@@ -75,9 +75,8 @@ const Scanner = () => {
       })
 
       const res = await API.post(
-        'http://localhost:5000/api/product/photo',
-        { imageBase64: base64, mimeType: file.type },
-        { headers: { Authorization: `Bearer ${token}` } }
+        '/api/product/photo',
+        { imageBase64: base64, mimeType: file.type }
       )
 
       setProduct(res.data.product)
