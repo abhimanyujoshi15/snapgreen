@@ -8,7 +8,8 @@ import {
   Trophy,
   User,
   LogOut,
-  Leaf
+  Leaf,
+  ChevronRight
 } from 'lucide-react'
 import styles from './Navbar.module.css'
 
@@ -18,62 +19,70 @@ const Navbar = () => {
   const { user, logout } = useAuth()
 
   const tabs = [
-    { path: '/dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
-    { path: '/scanner', icon: <ScanLine size={20} />, label: 'Scan Product' },
-    { path: '/history', icon: <History size={20} />, label: 'Scan History' },
-    { path: '/badges', icon: <Medal size={20} />, label: 'Badges' },
-    { path: '/leaderboard', icon: <Trophy size={20} />, label: 'Leaderboard' },
-    { path: '/profile', icon: <User size={20} />, label: 'Profile' },
+    { path: '/dashboard', icon: <LayoutDashboard size={20} />, label: 'Overview' },
+    { path: '/scanner', icon: <ScanLine size={20} />, label: 'Eco Scanner' },
+    { path: '/history', icon: <History size={20} />, label: 'My Scans' },
+    { path: '/badges', icon: <Medal size={20} />, label: 'Achievements' },
+    { path: '/leaderboard', icon: <Trophy size={20} />, label: 'Ranking' },
+    { path: '/profile', icon: <User size={20} />, label: 'Account' },
   ]
 
   const isActive = (path) => location.pathname === path
 
   return (
     <aside className={styles.sidebar}>
-
-      {/* Logo */}
-      <div className={styles.logo} onClick={() => navigate('/dashboard')}>
-        <div className={styles.logoIconBox}>
-          <Leaf size={20} color='white' />
+      {/* Brand Branding */}
+      <div className={styles.brand} onClick={() => navigate('/dashboard')}>
+        <div className={styles.logoContainer}>
+          <Leaf size={22} fill="#10b981" color="#10b981" />
         </div>
-        <span className={styles.logoText}>SnapGreen</span>
+        <div className={styles.brandText}>
+          <span className={styles.appName}>SnapGreen</span>
+          <span className={styles.appTag}>Eco-Assistant</span>
+        </div>
       </div>
 
-      {/* Nav Links */}
-      <nav className={styles.nav}>
-        {tabs.map((tab) => (
-          <button
-            key={tab.path}
-            className={`${styles.navItem} ${isActive(tab.path) ? styles.active : ''}`}
-            onClick={() => navigate(tab.path)}
-          >
-            <span className={`${styles.navIcon} ${isActive(tab.path) ? styles.activeIcon : ''}`}>
-              {tab.icon}
-            </span>
-            <span className={styles.navLabel}>{tab.label}</span>
-            {isActive(tab.path) && <div className={styles.activeBar} />}
-          </button>
-        ))}
+      {/* Navigation Menu */}
+      <nav className={styles.navigation}>
+        <div className={styles.navGroup}>
+          <p className={styles.groupLabel}>Main Menu</p>
+          {tabs.map((tab) => (
+            <button
+              key={tab.path}
+              className={`${styles.navLink} ${isActive(tab.path) ? styles.activeLink : ''}`}
+              onClick={() => navigate(tab.path)}
+            >
+              <div className={styles.iconWrapper}>
+                {tab.icon}
+              </div>
+              <span className={styles.linkLabel}>{tab.label}</span>
+              {isActive(tab.path) && <ChevronRight size={14} className={styles.activeIndicator} />}
+            </button>
+          ))}
+        </div>
       </nav>
 
-      {/* Bottom User Info */}
-      <div className={styles.userSection}>
-        <div className={styles.userAvatar}>
-          {user?.name?.charAt(0).toUpperCase()}
+      {/* User Footer */}
+      <div className={styles.footer}>
+        <div className={styles.userCard}>
+          <div className={styles.userAvatar}>
+            {user?.name?.charAt(0).toUpperCase()}
+          </div>
+          <div className={styles.userMeta}>
+            <p className={styles.userName}>{user?.name?.split(' ')[0]}</p>
+            <p className={styles.userPoints}>
+              <span className={styles.leafIcon}>🌿</span> {user?.greenScore || 0} pts
+            </p>
+          </div>
+          <button
+            className={styles.logoutBtn}
+            onClick={() => { logout(); navigate('/login') }}
+            aria-label="Logout"
+          >
+            <LogOut size={18} />
+          </button>
         </div>
-        <div className={styles.userInfo}>
-          <span className={styles.userName}>{user?.name}</span>
-          <span className={styles.userScore}>🌿 {user?.greenScore || 0} pts</span>
-        </div>
-        <button
-          className={styles.logoutIcon}
-          onClick={() => { logout(); navigate('/login') }}
-          title='Logout'
-        >
-          <LogOut size={16} color='#e53935' />
-        </button>
       </div>
-
     </aside>
   )
 }
